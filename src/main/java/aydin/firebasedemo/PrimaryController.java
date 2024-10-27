@@ -81,15 +81,11 @@ public class PrimaryController {
 
     @FXML
     private void switchToSecondary() throws IOException {
-        DemoApp.setRoot("secondary");
+        DemoApp.setRoot("welcome");
     }
     public boolean readFirebase()
     {
         key = false;
-        //make sure to wipe console before anything else here > find console name
-        //maybe put this in the method that calls readFirebase
-        //might also just need to be removed from outputTA.set below in for(QDS doc:doc)
-
         //asynchronously retrieve all documents
         ApiFuture<QuerySnapshot> future =  DemoApp.fstore.collection("Persons").get();
         // future.get() blocks on response
