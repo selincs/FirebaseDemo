@@ -86,6 +86,9 @@ public class PrimaryController {
     public boolean readFirebase()
     {
         key = false;
+        //make sure to wipe console before anything else here > find console name
+        //maybe put this in the method that calls readFirebase
+        //might also just need to be removed from outputTA.set below in for(QDS doc:doc)
 
         //asynchronously retrieve all documents
         ApiFuture<QuerySnapshot> future =  DemoApp.fstore.collection("Persons").get();
@@ -98,13 +101,15 @@ public class PrimaryController {
             {
                 System.out.println("Getting (reading) data from firabase database....");
                 listOfUsers.clear();
+                outputTextArea.clear();
                 for (QueryDocumentSnapshot document : documents)
                 {
                     outputTextArea.setText(outputTextArea.getText()+ document.getData().get("Name")+ " , Age: "+
-                            document.getData().get("Age")+ " \n ");
+                            document.getData().get("Age")+ ", Phone Number: " + document.getData().get("Phone Number") +" \n ");
                     System.out.println(document.getId() + " => " + document.getData().get("Name"));
                     person  = new Person(String.valueOf(document.getData().get("Name")),
-                            Integer.parseInt(document.getData().get("Age").toString()));
+                            Integer.parseInt(document.getData().get("Age").toString()),
+                            String.valueOf(document.getData().get("Phone Number")));
                     listOfUsers.add(person);
                 }
             }
@@ -153,6 +158,8 @@ public class PrimaryController {
         Map<String, Object> data = new HashMap<>();
         data.put("Name", nameTextField.getText());
         data.put("Age", Integer.parseInt(ageTextField.getText()));
+        //added phone number to addData to capture newly added data member
+        data.put("Phone Number", phoneNumTextField.getText());
 
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
