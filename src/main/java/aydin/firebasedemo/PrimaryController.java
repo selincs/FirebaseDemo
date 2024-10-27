@@ -30,6 +30,9 @@ public class PrimaryController {
     private TextField nameTextField;
 
     @FXML
+    private TextField phoneNumTextField;
+
+    @FXML
     private TextArea outputTextArea;
 
     @FXML
